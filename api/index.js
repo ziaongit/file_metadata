@@ -6,14 +6,13 @@ var cors = require('cors');
 const path = require('path');
 
 var multer = require('multer');
-var upload = multer({ dest: path.resolve(__dirname, '../uploads/') });
-
+var storage = multer.memoryStorage();
+var upload = multer({ storage: storage });
 
 var app = express();
 
 app.use(cors());
 app.use('/public', express.static(path.resolve(__dirname, '../public')));
-
 
 app.get('/', function (req, res) {
   res.sendFile(path.resolve(__dirname, '../views/index.html'));
@@ -27,7 +26,7 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
       "size": req.file.size
     });
   } catch (err) {
-    res.send(400);
+    res.status(400).send(err.message);
   }
 });
 
