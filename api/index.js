@@ -5,7 +5,6 @@ var express = require('express');
 var cors = require('cors');
 const path = require('path');
 
-// require and use "multer"...
 var multer = require('multer');
 var upload = multer({ dest: path.resolve(__dirname, '../uploads/') });
 
